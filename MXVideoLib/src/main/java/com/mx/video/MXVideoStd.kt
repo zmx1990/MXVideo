@@ -60,6 +60,13 @@ open class MXVideoStd @JvmOverloads constructor(
 
             override fun onPlayTicket(position: Int, duration: Int) {
                 onPlayTicketListener?.invoke(position, duration)
+
+                val config = getConfig()
+                if (config.forceCompleteWhenBeyondDuration.get()
+                    && (duration > 0) && (position > duration)
+                ) {
+                    getPlayer()?.forcedComplete()
+                }
             }
 
             override fun onBuffering(inBuffer: Boolean) {

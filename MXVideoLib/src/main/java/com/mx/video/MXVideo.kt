@@ -290,10 +290,8 @@ abstract class MXVideo @JvmOverloads constructor(
                 if (config.source.get()?.isLiveSource == true
                     && config.replayLiveSourceWhenError.get()
                     && (config.state.get() in arrayOf(
-                        MXState.PLAYING,
-                        MXState.PAUSE,
-                        MXState.PREPARING,
-                        MXState.PREPARED
+                        MXState.PLAYING, MXState.PAUSE,
+                        MXState.PREPARING, MXState.PREPARED
                     ))
                 ) {
                     MXUtils.log("MXVideo: onPlayerError() ---> 直播重试")
@@ -460,11 +458,13 @@ abstract class MXVideo @JvmOverloads constructor(
     override fun seekTo(seek: Int) {
         MXUtils.log("MXVideo: seekTo(${MXUtils.stringForTime(seek)})")
         val player = mxPlayer
-        if (player != null && config.state.get() in arrayOf(MXState.PLAYING, MXState.PAUSE)) {
-            player.seekTo(seek)
-            viewSet.processLoading()
-        } else {
-            config.seekWhenPlay.set(seek)
+        scope.launch {
+            if (player != null && config.state.get() in arrayOf(MXState.PLAYING, MXState.PAUSE)) {
+                player.seekTo(seek)
+                viewSet.processLoading()
+            } else {
+                config.seekWhenPlay.set(seek)
+            }
         }
     }
 
@@ -542,6 +542,7 @@ abstract class MXVideo @JvmOverloads constructor(
 
         if (player != null) {
             MXUtils.log("MXVideo: stopPlay()")
+            player.setPlayerCallback(null)
             scope.launch { player.release() }
         }
 
@@ -661,7 +662,8 @@ abstract class MXVideo @JvmOverloads constructor(
         val startRun = {
             val player = createPlayer()
             val textureView = viewSet.attachTextureView()
-            player.startPlay(context, playerCallback, source, textureView)
+            player.setPlayerCallback(playerCallback)
+            player.startPlay(context, source, textureView)
 
             mxPlayer = player
             PLAYING_VIDEO = this

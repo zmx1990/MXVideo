@@ -69,14 +69,16 @@ abstract class IMXPlayer : TextureView.SurfaceTextureListener {
         scope?.launch(context = context, block = block)
     }
 
+    fun setPlayerCallback(callback: IMXPlayerCallback?) {
+        this.playerCallback = callback
+    }
+
     internal fun startPlay(
         context: Context,
-        callback: IMXPlayerCallback,
         source: MXPlaySource,
         textureView: MXTextureView
     ) {
         this.mContext = context
-        this.playerCallback = callback
         this.mTextureView = textureView
         this.mPlaySource = source
 
@@ -150,7 +152,7 @@ abstract class IMXPlayer : TextureView.SurfaceTextureListener {
     /**
      * 快进，单位：秒
      */
-    abstract fun seekTo(time: Int)
+    abstract suspend fun seekTo(time: Int)
 
     /**
      * 释放资源
@@ -171,6 +173,13 @@ abstract class IMXPlayer : TextureView.SurfaceTextureListener {
         mTextureView?.release()
         mTextureView = null
         mSurfaceTexture = null
+    }
+
+    /**
+     * 强制“播放完成”流程
+     */
+    fun forcedComplete() {
+        launch { notifyPlayerCompletion() }
     }
 
     /**

@@ -180,6 +180,11 @@ class MXConfig : Serializable {
     val playSpeed = MXObservable(1f)
 
     /**
+     * 当播放时常超出总时长时，强制停止播放，这个是为了兼容部分机器
+     */
+    val forceCompleteWhenBeyondDuration = MXObservable(true)
+
+    /**
      * 是否可以快进快退
      */
     internal fun sourceCanSeek(): Boolean {
@@ -215,6 +220,7 @@ class MXConfig : Serializable {
         enableTouchWhenNormalScreen.set(target.enableTouchWhenNormalScreen.get())
         ticketDiff.set(target.ticketDiff.get())
         playSpeed.set(target.playSpeed.get())
+        forceCompleteWhenBeyondDuration.set(target.forceCompleteWhenBeyondDuration.get())
     }
 
     internal fun release() {
