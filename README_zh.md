@@ -6,7 +6,7 @@
 
 最新版本：[![](https://jitpack.io/v/zhangmengxiong/MXVideo.svg)](https://jitpack.io/#zhangmengxiong/MXVideo)
 ```groovy
-    implementation 'com.github.zhangmengxiong:MXVideo:1.9.3'
+    implementation 'com.gitee.zhangmengxiong:MXVideo:1.9.4'
 ```
 
 ![Normal](https://gitee.com/zhangmengxiong/MXVideo/raw/master/imgs/1.png)
@@ -31,7 +31,7 @@
 ##### 1、通过 dependence 引入MXVideo
 ```groovy
     dependencies {
-        implementation 'com.github.zhangmengxiong:MXVideo:x.x.x'
+        implementation 'com.gitee.zhangmengxiong:MXVideo:x.x.x'
     }
 ```
 

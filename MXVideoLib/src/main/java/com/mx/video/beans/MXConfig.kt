@@ -182,7 +182,7 @@ class MXConfig : Serializable {
     /**
      * 当播放时常超出总时长时，强制停止播放，这个是为了兼容部分机器
      */
-    val forceCompleteWhenBeyondDuration = MXObservable(true)
+    val forceCompleteWhenBeyondDuration = MXObservable(false)
 
     /**
      * 是否可以快进快退
