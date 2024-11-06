@@ -50,8 +50,8 @@ internal class MXTicket {
     }
 
     fun stop() {
+        isStartTicket = false
         synchronized(this) {
-            isStartTicket = false
             scope?.cancel()
             scope = null
         }
