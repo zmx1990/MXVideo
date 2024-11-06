@@ -3,12 +3,10 @@ package com.mx.mxvideo_demo.player.vlc;
 import android.content.Context
 import android.content.SharedPreferences
 import android.media.AudioManager
-import android.os.Build
 import android.preference.PreferenceManager
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
 import androidx.multidex.BuildConfig
-import com.mx.mxvideo_demo.MyApp
 import com.mx.mxvideo_demo.R
 import org.videolan.libvlc.interfaces.IMedia
 import org.videolan.libvlc.util.AndroidUtil

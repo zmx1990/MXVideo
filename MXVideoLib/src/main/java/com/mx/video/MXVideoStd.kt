@@ -63,7 +63,7 @@ open class MXVideoStd @JvmOverloads constructor(
 
                 val config = getConfig()
                 if (config.forceCompleteWhenBeyondDuration.get()
-                    && (duration > 0) && (position > duration)
+                    && (duration > 0) && (position >= duration)
                 ) {
                     getPlayer()?.forcedComplete()
                 }

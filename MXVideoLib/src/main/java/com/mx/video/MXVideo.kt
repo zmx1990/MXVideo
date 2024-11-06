@@ -239,13 +239,13 @@ abstract class MXVideo @JvmOverloads constructor(
     private val playerCallback = object : IMXPlayerCallback {
         override suspend fun onPlayerPrepared(player: IMXPlayer) = withContext(Dispatchers.Main) {
             config.volumePercent.notifyChangeSync()
+            seekToWhenPlay(player)
             if (config.isPreloading.get()) {
                 MXUtils.log("MXVideo: onPlayerPrepared -> need click start button to play")
                 config.state.updateValue(MXState.PREPARED)
             } else {
                 MXUtils.log("MXVideo: onPlayerPrepared -> start play")
                 player.start()
-                seekToWhenPlay()
             }
         }
 
@@ -283,6 +283,7 @@ abstract class MXVideo @JvmOverloads constructor(
         }
 
         override suspend fun onPlayerSeekComplete() {
+            MXUtils.log("MXVideo: onPlayerSeekComplete()")
         }
 
         override suspend fun onPlayerError(source: MXPlaySource, error: String) =
@@ -689,16 +690,15 @@ abstract class MXVideo @JvmOverloads constructor(
      * 播放前跳转
      * 必须在player.start()调用之后再使用
      */
-    open fun seekToWhenPlay() {
-        val player = mxPlayer ?: return
-        scope.launch {
-            val seekTo = getSeekPosition()
-            if (seekTo > 0) {
-                MXUtils.log("MXVideo: seekToWhenPlay(${seekTo})")
-                player.seekTo(seekTo)
-            }
-            config.seekWhenPlay.updateValue(-1)
+    open suspend fun seekToWhenPlay(player: IMXPlayer) {
+        val seekTo = withContext(Dispatchers.IO) {
+            getSeekPosition()
         }
+        if (seekTo > 0) {
+            MXUtils.log("MXVideo: seekToWhenPlay(${seekTo})")
+            player.seekTo(seekTo)
+        }
+        config.seekWhenPlay.updateValue(-1)
     }
 
     /**

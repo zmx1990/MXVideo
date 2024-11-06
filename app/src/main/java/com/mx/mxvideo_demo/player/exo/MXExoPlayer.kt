@@ -18,7 +18,6 @@ import com.google.android.exoplayer2.video.VideoSize
 import com.mx.video.beans.MXPlaySource
 import com.mx.video.player.IMXPlayer
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class MXExoPlayer : IMXPlayer(), Player.Listener, AnalyticsListener {

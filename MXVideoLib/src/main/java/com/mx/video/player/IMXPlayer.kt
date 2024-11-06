@@ -110,9 +110,7 @@ abstract class IMXPlayer : TextureView.SurfaceTextureListener {
         val texture = mSurfaceTexture
         if (texture == null) {
             mSurfaceTexture = surface
-            scope?.launch {
-                requestPrepare()
-            }
+            scope?.launch { requestPrepare() }
         } else {
             mTextureView?.setSurfaceTexture(texture)
         }
@@ -122,7 +120,6 @@ abstract class IMXPlayer : TextureView.SurfaceTextureListener {
     }
 
     override fun onSurfaceTextureDestroyed(surface: SurfaceTexture): Boolean {
-
         return false
     }
 

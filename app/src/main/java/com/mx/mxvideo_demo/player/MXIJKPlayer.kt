@@ -7,7 +7,6 @@ import android.view.Surface
 import com.mx.video.beans.MXPlaySource
 import com.mx.video.player.IMXPlayer
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import tv.danmaku.ijk.media.player.IMediaPlayer
 import tv.danmaku.ijk.media.player.IjkMediaPlayer
