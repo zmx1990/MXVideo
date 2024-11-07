@@ -4,9 +4,10 @@
 基于Kotlin开发的播放器，默认支持MediaPlayer播放器，可扩展VLC播放器、IJK播放器、EXO播放器、阿里云播放器、以及任何使用TextureView的播放器, 开箱即用，欢迎提 issue 和 pull request
 > 简书相关介绍（待完善）：https://www.jianshu.com/nb/50294642
 
-最新版本：[![](https://jitpack.io/v/zhangmengxiong/MXVideo.svg)](https://jitpack.io/#zhangmengxiong/MXVideo)
+最新版本：[![](https://jitpack.io/v/com.gitee.zhangmengxiong/MXVideo.svg)](https://jitpack.io/#com.gitee.zhangmengxiong/MXVideo)
+
 ```groovy
-    implementation 'com.gitee.zhangmengxiong:MXVideo:1.9.6'
+    implementation 'com.gitee.zhangmengxiong:MXVideo:1.9.7'
 ```
 
 ![Normal](https://gitee.com/zhangmengxiong/MXVideo/raw/master/imgs/1.png)

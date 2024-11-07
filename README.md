@@ -4,9 +4,10 @@
 The player developed based on Kotlin supports MediaPlayer by default, and can be extended with VLC player, IJK player, EXO player, Alibaba Cloud player, and any player that uses TextureView
 > Introduction to the book (to be completed)：https://www.jianshu.com/nb/50294642
 
-The latest version：[![](https://jitpack.io/v/zhangmengxiong/MXVideo.svg)](https://jitpack.io/#zhangmengxiong/MXVideo)
+The latest version：[![](https://jitpack.io/v/com.gitee.zhangmengxiong/MXVideo.svg)](https://jitpack.io/#com.gitee.zhangmengxiong/MXVideo)
+
 ```groovy
-    implementation 'com.gitee.zhangmengxiong:MXVideo:1.9.6'
+    implementation 'com.gitee.zhangmengxiong:MXVideo:1.9.7'
 ```
 
 ![Normal](https://gitee.com/zhangmengxiong/MXVideo/raw/master/imgs/1.png)
