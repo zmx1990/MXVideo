@@ -291,6 +291,11 @@ class NormalActivity : AppCompatActivity() {
             binding.mxVideoStd.getConfig().replayLiveSourceWhenError.set(checkedId == R.id.liveRetryTrue)
         }
         binding.liveRetryFalse.performClick()
+
+        binding.forceCompleteRG.setOnCheckedChangeListener { group, checkedId ->
+            binding.mxVideoStd.getConfig().forceCompleteWhenBeyondDuration.set(checkedId == R.id.forceCompleteTrue)
+        }
+        binding.forceCompleteFalse.performClick()
     }
 
     private fun stringForTime(time: Int): String {

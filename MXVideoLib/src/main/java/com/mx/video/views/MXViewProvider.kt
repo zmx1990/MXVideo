@@ -23,6 +23,7 @@ import com.mx.video.utils.MXObservable
 import com.mx.video.utils.MXTicket
 import com.mx.video.utils.MXUtils
 import com.mx.video.utils.touch.MXTouchHelp
+import kotlin.math.abs
 import kotlin.math.min
 import kotlin.math.roundToInt
 
@@ -41,6 +42,7 @@ internal class MXViewProvider(val viewSet: MXViewSet, val mxVideo: IMXVideo, val
     private val touchHelp = MXTouchHelp(viewSet.context)
     private val delayDismiss = MXDismissDelay()
     private val speedHelp = MXNetSpeedHelp()
+
 
     fun initView() {
         // 全屏切换时，显示设置
@@ -337,6 +339,7 @@ internal class MXViewProvider(val viewSet: MXViewSet, val mxVideo: IMXVideo, val
                 if (oldD != curD || oldP != curP) {
                     position.updateValue(MXPair(curP, curD))
                 }
+                processBeyondProgress(curP, curD)
             }
         })
 
@@ -391,12 +394,32 @@ internal class MXViewProvider(val viewSet: MXViewSet, val mxVideo: IMXVideo, val
 
         // 全屏返回按钮响应
         viewSet.mxReturnBtn.setOnClickListener {
-            if (config.screen.get() == MXScreen.FULL) {
-                mxVideo.switchToScreen(MXScreen.NORMAL)
+            if (config.screen.get() != MXScreen.FULL) {
+                return@setOnClickListener
             }
+            mxVideo.switchToScreen(MXScreen.NORMAL)
         }
     }
 
+    /**
+     * 兼容部分手机超出进度时不回调complete
+     */
+    private var beyondDurationStart = 0L
+    private fun processBeyondProgress(position: Int, duration: Int) {
+        if (config.source.get()?.isLiveSource == true) return
+        if (!config.forceCompleteWhenBeyondDuration.get()) return
+        if (duration <= 0) {
+            beyondDurationStart = -1L
+            return
+        }
+        if (position < duration) return
+        if (beyondDurationStart <= 0L) {
+            beyondDurationStart = System.currentTimeMillis()
+        } else if (abs(System.currentTimeMillis() - beyondDurationStart) > 2000) {
+            beyondDurationStart = -1L
+            mxVideo.getPlayer()?.forcedComplete()
+        }
+    }
 
     /**
      * 状态处理
